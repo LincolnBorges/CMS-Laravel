@@ -33,8 +33,8 @@
         </div>
     </div>
     <div class="form-inline form-group">
-        {!! Form::label('file','Foto:') !!}
-        {!! Form::file('file',['class'=>'form-control']); !!}
+        {!! Form::label('photo_id','Foto:') !!}
+        {!! Form::file('photo_id',['class'=>'form-control']); !!}
     </div>
     <div class="form-group">
         {!! Form::submit('Salvar',['class'=>'btn btn-primary']) !!}
