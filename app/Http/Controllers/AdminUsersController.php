@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -94,12 +95,13 @@ class AdminUsersController extends Controller
     public function update(UsersEditRequest $request, $id)
     {
         $user = User::findOrFail($id);
+        $input = $request->all();
+        /** Já montei essa lógica no Attribute do App/Users.php
         if(trim($request->password))
             $input = $request->all();
         else
-        {
             $input = $request->except('password');
-        }
+         */
 
         if($file = $request->file('photo_id'))
         {
@@ -121,6 +123,21 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        /**
+         * Deletando a foto do banco e do projeto
+         */
+        if ($user->photo_id) {
+            $photo = Photo::findOrFail($user->photo_id);
+            unlink(public_path() . $photo->file);
+            $photo->delete();
+        }
+
+        $user->delete();
+
+        Session::flash('deleted_user','Usuário "'.$user->name.'" deletado com sucesso');
+
+        return redirect(route('admin.users.index'));
     }
 }

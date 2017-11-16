@@ -3,6 +3,11 @@
 @section('content')
     <h1>Usuários</h1>
     <br><br>
+
+    @if(Session::has('deleted_user'))
+        <div class="alert alert-danger">{{session('deleted_user')}}</div>
+    @endif
+
     <table class="table table-hover table-responsive">
         <thead>
           <tr>
@@ -18,7 +23,7 @@
         @if($users)
         @foreach ($users as $user)
           <tr>
-            <td><img src="{{$user->photo ? $user->photo->file : '/images/user-profile-placeholder.png'}}" width="100" class="img-responsive img-circle"></td>
+            <td><img src="{{$user->photo ? $user->photo->file : '/images/user-profile-placeholder.png'}}" width="100" class="img-responsive img-rounded"></td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->role->name}}</td>
@@ -27,6 +32,12 @@
                 <a href="{{route('admin.users.edit',$user->id)}}" class="btn btn-info">
                     <i class="fa fa-edit"></i> Editar
                 </a>
+
+                {!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy',$user->id],'style'=>'display: inline-block;']) !!}
+                {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+                {!! Form::close() !!}
+
+
             </td>
           </tr>
         @endforeach

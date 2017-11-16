@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-3">
-        <img src="{{$user->photo ? $user->photo->file : '/images/user-profile-placeholder.png'}}" width="200" class="img-responsive img-circle">
+        <img src="{{$user->photo ? $user->photo->file : '/images/user-profile-placeholder.png'}}" width="200" class="img-responsive img-rounded">
     </div>
     <div class="col-md-9">
         {!! Form::model($user,['method' => 'PATCH', 'action' => ['AdminUsersController@update',$user->id], 'files' => true]) !!}
@@ -43,8 +43,12 @@
             {!! Form::file('photo_id',['class'=>'form-control']); !!}
         </div>
         <div class="form-group">
-            {!! Form::submit('Salvar',['class'=>'btn btn-primary']) !!}
+            {{ Form::button('<i class="fa fa-save" aria-hidden="true"></i> Salvar', ['class' => 'btn btn-primary col-md-3 col-md-offset-2', 'type' => 'submit']) }}
         </div>
+        {!! Form::close() !!}
+
+        {!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy',$user->id]]) !!}
+        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger col-md-3 col-md-offset-1', 'type' => 'submit']) }}
         {!! Form::close() !!}
     </div>
 
