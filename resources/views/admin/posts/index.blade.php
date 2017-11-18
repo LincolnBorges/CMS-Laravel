@@ -23,9 +23,9 @@
                     <td>{{$post->user->name}}</td>
                     <td>{{$post->category ? $post->category->name : 'Sem categoria'}}</td>
                     <td>{{$post->title}}</td>
-                    <td>{{$post->body}}</td>
+                    <td>{{str_limit($post->body,10)}}</td>
                     <td>
-                        <a href="{{route('admin.users.edit',$post->id)}}" class="btn btn-info">
+                        <a href="{{route('admin.posts.edit',$post->id)}}" class="btn btn-info">
                             <i class="fa fa-edit"></i> Editar
                         </a>
 
