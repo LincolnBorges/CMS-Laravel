@@ -22,7 +22,7 @@ class AdminUsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users.index',compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -32,8 +32,8 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::lists('name','id')->all();
-        return view('admin.users.create',compact('roles'));
+        $roles = Role::lists('name', 'id')->all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -48,10 +48,9 @@ class AdminUsersController extends Controller
         //dd($request->all());
         $input = $request->all();
 
-        if($file = $request->file('photo_id'))
-        {
+        if ($file = $request->file('photo_id')) {
             $name = time().$file->getClientOriginalName();
-            $file->move('images',$name);
+            $file->move('images', $name);
             $photo = Photo::create(['file'=>$name]);
             $input['photo_id'] = $photo->id;
         }
@@ -81,8 +80,8 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::lists('name','id')->all();
-        return view('admin.users.edit', compact('user','roles'));
+        $roles = Role::lists('name', 'id')->all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -103,10 +102,9 @@ class AdminUsersController extends Controller
             $input = $request->except('password');
          */
 
-        if($file = $request->file('photo_id'))
-        {
+        if ($file = $request->file('photo_id')) {
             $name = time().$file->getClientOriginalName();
-            $file->move('images',$name);
+            $file->move('images', $name);
             $photo = Photo::create(['file'=>$name]);
             $input['photo_id'] = $photo->id;
         }
@@ -136,7 +134,7 @@ class AdminUsersController extends Controller
 
         $user->delete();
 
-        Session::flash('deleted_user','Usuário "'.$user->name.'" deletado com sucesso');
+        Session::flash('deleted_user', 'Usuário "'.$user->name.'" deletado com sucesso');
 
         return redirect(route('admin.users.index'));
     }

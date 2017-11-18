@@ -37,7 +37,8 @@
         {!! Form::file('photo_id',['class'=>'form-control']); !!}
     </div>
     <div class="form-group">
-        {!! Form::submit('Salvar',['class'=>'btn btn-primary']) !!}
+        <br>
+        {{ Form::button('<i class="fa fa-save" aria-hidden="true"></i> Salvar', ['class' => 'btn btn-primary col-md-6 col-md-offset-3', 'type' => 'submit']) }}
     </div>
     {!! Form::close() !!}
 
