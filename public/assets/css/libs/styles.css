@@ -7,6 +7,10 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+table .btn[type="submit"] {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
 .btn[type="submit"] .fa {
     margin-right: 8px;
 }

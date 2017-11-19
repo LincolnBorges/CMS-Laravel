@@ -11,13 +11,14 @@
 
     <title>Admin</title>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/blog-post.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/bootstrap.css') }}">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/metisMenu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/sb-admin-2.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/styles.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/blog-post.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/bootstrap.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/metisMenu.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/sb-admin-2.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/styles.css') }}">--}}
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/css/all.min.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -343,12 +344,12 @@
 </div>
 <!-- /#wrapper -->
 
-<script src="{{ asset('assets/js/libs/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/libs/bootstrap.js') }}"></script>
-<script src="{{ asset('assets/js/libs/metisMenu.js') }}"></script>
-<script src="{{ asset('assets/js/libs/sb-admin-2.js') }}"></script>
-<script src="{{ asset('assets/js/libs/scripts.js') }}"></script>
-
+{{--<script src="{{ asset('assets/js/libs/jquery.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/libs/bootstrap.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/libs/metisMenu.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/libs/sb-admin-2.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/libs/scripts.js') }}"></script>--}}
+<script src="{{ asset('build/js/all.min.js') }}"></script>
 
 @yield('footer')
 

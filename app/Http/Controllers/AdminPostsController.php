@@ -121,6 +121,7 @@ class AdminPostsController extends Controller
             $post->photo->delete();
         }
         $post->delete();
+        Session::flash('deleted_post', 'Post "'.$user->name.'" deletado com sucesso');
         return redirect(route('admin.posts.index'));
     }
 }

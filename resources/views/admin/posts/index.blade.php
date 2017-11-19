@@ -4,6 +4,10 @@
     <h1>Posts</h1>
     <br><br>
 
+    @if(Session::has('deleted_user'))
+        <div class="alert alert-danger">{{session('deleted_user')}}</div>
+    @endif
+
     <table class="table table-hover table-responsive">
         <thead>
         <tr>
