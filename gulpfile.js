@@ -12,14 +12,20 @@ var paths = {
     images: 'public/images/**/*'
 };
 
-// Not all tasks need to use streams
-// A gulpfile is just another node program and you can use any package available on npm
-gulp.task('clean', function() {
-    // You can use multiple globbing patterns as you would with `gulp.src`
-    return del(['build']);
+gulp.task('clean:js', function() {
+    return del(['public/build/js']);
 });
 
-gulp.task('scripts', ['clean'], function() {
+gulp.task('clean:css', function() {
+    return del(['public/build/css']);
+});
+
+gulp.task('clean:img', function() {
+    return del(['public/build/img']);
+});
+
+
+gulp.task('scripts', ['clean:js'], function() {
     // Minify and copy all JavaScript (except vendor scripts)
     // with sourcemaps all the way down
     return gulp.src(paths.scripts)
@@ -30,7 +36,7 @@ gulp.task('scripts', ['clean'], function() {
         .pipe(gulp.dest('public/build/js'));
 });
 
-gulp.task('styles', ['clean'], function() {
+gulp.task('styles', ['clean:css'], function() {
     // Minify and copy all JavaScript (except vendor scripts)
     // with sourcemaps all the way down
     return gulp.src(paths.styles)
@@ -42,7 +48,7 @@ gulp.task('styles', ['clean'], function() {
 });
 
 // Copy all static images
-gulp.task('images', ['clean'], function() {
+gulp.task('images', ['clean:img'], function() {
     return gulp.src(paths.images)
     // Pass in options to the task
         .pipe(imagemin({verbose: true,progressive: true,optimizationLevel: 5}))
@@ -57,4 +63,4 @@ gulp.task('watch', function() {
 });
 
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['watch', 'scripts', 'styles', 'images']);
+gulp.task('default', ['clean:js', 'clean:css', 'clean:img', 'watch', 'scripts', 'styles', 'images']);

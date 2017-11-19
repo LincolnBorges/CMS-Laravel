@@ -19,7 +19,7 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('build/css/all.min.css') }}">
-
+    @yield('styles')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -168,11 +168,11 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Media<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">All Media</a>
+                                <a href="{{route('admin.media.index')}}">All Media</a>
                             </li>
 
                             <li>
-                                <a href="#">Upload Media</a>
+                                <a href="{{route('admin.media.create')}}">Upload Media</a>
                             </li>
 
                         </ul>
@@ -349,6 +349,7 @@
 {{--<script src="{{ asset('assets/js/libs/metisMenu.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/libs/sb-admin-2.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/libs/scripts.js') }}"></script>--}}
+@yield('scripts')
 <script src="{{ asset('build/js/all.min.js') }}"></script>
 
 @yield('footer')
