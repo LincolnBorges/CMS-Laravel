@@ -5,6 +5,7 @@ var minifyCSS = require('gulp-minify-css');
 var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
+//var exec = require('child_process').exec;
 
 var paths = {
     scripts: ['public/assets/js/libs/jquery.js','public/assets/js/libs/bootstrap.js','public/assets/**/*.js'],
@@ -26,8 +27,6 @@ gulp.task('clean:img', function() {
 
 
 gulp.task('scripts', ['clean:js'], function() {
-    // Minify and copy all JavaScript (except vendor scripts)
-    // with sourcemaps all the way down
     return gulp.src(paths.scripts)
         .pipe(sourcemaps.init())
         .pipe(uglify())
@@ -37,8 +36,6 @@ gulp.task('scripts', ['clean:js'], function() {
 });
 
 gulp.task('styles', ['clean:css'], function() {
-    // Minify and copy all JavaScript (except vendor scripts)
-    // with sourcemaps all the way down
     return gulp.src(paths.styles)
         .pipe(sourcemaps.init())
         .pipe(minifyCSS())
@@ -47,20 +44,32 @@ gulp.task('styles', ['clean:css'], function() {
         .pipe(gulp.dest('public/build/css'));
 });
 
-// Copy all static images
+// Tentativa de deletar os arquivos que não estão no banco de dados antes de executar a otimização do gulp
+// gulp.task('delete_useless_photos', function(){
+//     exec('php delete_useless_photos.php', function (err, stdout, stderr) {
+//         console.log(stdout)
+//         console.log(stderr)
+//     })
+// });
+
 gulp.task('images', ['clean:img'], function() {
     return gulp.src(paths.images)
-    // Pass in options to the task
-        .pipe(imagemin({verbose: true,progressive: true,optimizationLevel: 5}))
+        .pipe(imagemin({
+            verbose: true,
+            progressive: true,
+            arithmetic: true,
+            optimizationLevel: 7,
+            bitDepthReduction: true,
+            colorTypeReduction: true,
+            paletteReduction: true
+        }))
         .pipe(gulp.dest('public/build/img'));
 });
 
-// Rerun the task when a file changes
 gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.styles, ['styles']);
     gulp.watch(paths.images, ['images']);
 });
 
-// The default task (called when you run `gulp` from cli)
-gulp.task('default', ['clean:js', 'clean:css', 'clean:img', 'watch', 'scripts', 'styles', 'images']);
+gulp.task('default', ['clean:js', 'clean:css', 'clean:img', 'scripts', 'styles', 'images', 'watch']);
