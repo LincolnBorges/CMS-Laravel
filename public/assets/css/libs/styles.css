@@ -3,6 +3,13 @@
 #admin-page{
     padding-top:0px;
 }
+.btn[type="submit"] {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.btn[type="submit"] .fa {
+    margin-right: 8px;
+}
 /****************User Profile  *********************/
 .user-row {
     margin-bottom: 14px;

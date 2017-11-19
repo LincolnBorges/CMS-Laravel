@@ -1,28 +1,49 @@
-var elixir = require('laravel-elixir');
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
-elixir(function(mix) {
-    mix.sass('app.scss')
-        .styles([
-            'libs/blog-post.css',
-            'libs/bootstrap.css',
-            'libs/font-awesome.css',
-            'libs/metisMenu.css',
-            'libs/sb-admin-2.css'
-        ], './public/css/libs.css')
-        .scripts([
-            'libs/jquery.js',
-            'libs/bootstrap.js',
-            'libs/metisMenu.js',
-            'libs/sb-admin-2.js',
-            'libs/scripts.js'
-        ], './public/js/libs.js')
+var gulp = require('gulp');
+var coffee = require('gulp-coffee');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var imagemin = require('gulp-imagemin');
+var sourcemaps = require('gulp-sourcemaps');
+var del = require('del');
+
+var paths = {
+    scripts: 'public/assets/**/*.js',
+    style: 'public/assets/**/*.css',
+    images: 'public/images/**/*'
+};
+
+// Not all tasks need to use streams
+// A gulpfile is just another node program and you can use any package available on npm
+gulp.task('clean', function() {
+    // You can use multiple globbing patterns as you would with `gulp.src`
+    return del(['build']);
 });
+
+gulp.task('scripts', ['clean'], function() {
+    // Minify and copy all JavaScript (except vendor scripts)
+    // with sourcemaps all the way down
+    return gulp.src(paths.scripts)
+        .pipe(sourcemaps.init())
+        .pipe(coffee())
+        .pipe(uglify())
+        .pipe(concat('all.min.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('public/build/js'));
+});
+
+// Copy all static images
+gulp.task('images', ['clean'], function() {
+    return gulp.src(paths.images)
+    // Pass in options to the task
+        .pipe(imagemin({optimizationLevel: 5}))
+        .pipe(gulp.dest('public/build/img'));
+});
+
+// Rerun the task when a file changes
+gulp.task('watch', function() {
+    gulp.watch(paths.scripts, ['scripts']);
+    gulp.watch(paths.images, ['images']);
+});
+
+// The default task (called when you run `gulp` from cli)
+gulp.task('default', ['watch', 'scripts', 'images']);

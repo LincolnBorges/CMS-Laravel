@@ -99,8 +99,11 @@ class AdminPostsController extends Controller
             $imagem = Photo::create(['file'=>$name]);
             $input['photo_id'] = $imagem->id;
         }
+
+        /**
+         * Fazendo o UPDATE somente se for quem criou o post
+         */
         Auth::user()->posts()->whereId($id)->first()->update($input);
-        //Post::create($input);
         return redirect(route('admin.posts.index'));
     }
 
@@ -112,6 +115,12 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($post->photo_id) {
+            unlink(public_path().$post->photo->file);
+            $post->photo->delete();
+        }
+        $post->delete();
+        return redirect(route('admin.posts.index'));
     }
 }

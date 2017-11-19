@@ -127,9 +127,8 @@ class AdminUsersController extends Controller
          * Deletando a foto do banco e do projeto
          */
         if ($user->photo_id) {
-            $photo = Photo::findOrFail($user->photo_id);
-            unlink(public_path() . $photo->file);
-            $photo->delete();
+            unlink(public_path().$user->photo->file);
+            $user->photo->delete();
         }
 
         $user->delete();
