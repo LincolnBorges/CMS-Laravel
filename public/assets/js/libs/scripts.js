@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-
+    $(".dropdown-toggle").dropdown();
     $('#selectAllBoxes').click(function(event){
 
         if(this.checked) {
