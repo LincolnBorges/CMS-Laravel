@@ -41,6 +41,7 @@ class AdminCategoriesController extends Controller
     public function store(CategoriesRequest $request)
     {
         Category::create($request->all());
+        Session::flash('created', 'Categoria foi criado.');
         return redirect(route('admin.categories.index'));
     }
 
@@ -76,7 +77,9 @@ class AdminCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Category::findOrFail($id)->update($request->all());
+        $category = Category::findOrFail($id);
+        Session::flash('updated', 'Categoria "'.$request->name.'" foi atualizado.');
+        $category->update($request->all());
         return redirect(route('admin.categories.index'));
     }
 
@@ -89,7 +92,7 @@ class AdminCategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
-        Session::flash('deleted_categories', 'Categoria '.$category->name.' foi deletado com sucesso');
+        Session::flash('deleted', 'Categoria "'.$category->name.'" foi deletado.');
         $category->delete();
         return redirect(route('admin.categories.index'));
     }

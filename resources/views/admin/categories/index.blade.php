@@ -4,9 +4,7 @@
     <h1>Categorias</h1>
     <br><br>
 
-    @if(Session::has('deleted_categories'))
-        <div class="alert alert-danger">{{session('deleted_categories')}}</div>
-    @endif
+    @include('includes.sweetalert2')
 
     <div class="col-sm-6">
         @include('includes.errors')
@@ -41,8 +39,9 @@
                             </a>
 
                             {!! Form::open(['method'=>'DELETE', 'action'=>['AdminCategoriesController@destroy',$category->id],'style'=>'display: inline-block;']) !!}
-                            {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+                            {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger deletar', 'type' => 'submit']) }}
                             {!! Form::close() !!}
+                            @include("includes.delete-warning")
 
 
                         </td>
