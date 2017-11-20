@@ -56,7 +56,7 @@ class AdminUsersController extends Controller
         }
 
         User::create($input);
-
+        Session::flash('created', 'Usuário "'.$input['name'].'" foi criado.');
         return redirect(route('admin.users.index'));
     }
 
@@ -110,6 +110,7 @@ class AdminUsersController extends Controller
         }
 
         $user->update($input);
+        Session::flash('updated', 'Usuário "'.$input['name'].'" foi atualizado.');
         return redirect(route('admin.users.index'));
     }
 
@@ -132,9 +133,7 @@ class AdminUsersController extends Controller
         }
 
         $user->delete();
-
-        Session::flash('deleted_user', 'Usuário "'.$user->name.'" deletado com sucesso');
-
+        Session::flash('deleted', 'Usuário "'.$user->name.'" deletado com sucesso');
         return redirect(route('admin.users.index'));
     }
 }

@@ -349,9 +349,9 @@
 {{--<script src="{{ asset('assets/js/libs/metisMenu.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/libs/sb-admin-2.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/libs/scripts.js') }}"></script>--}}
-@yield('scripts')
 <script src="{{ asset('build/js/all.min.js') }}"></script>
-
+@yield('scripts')
+@yield('delete_warning')
 @yield('footer')
 
 
