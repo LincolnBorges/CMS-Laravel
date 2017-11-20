@@ -1,9 +1,12 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var minifyCSS = require('gulp-minify-css');
 var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var newer = require('gulp-newer');
+var cssnano = require('cssnano');
 var del = require('del');
 //var exec = require('child_process').exec;
 
@@ -36,9 +39,13 @@ gulp.task('scripts', ['clean:js'], function() {
 });
 
 gulp.task('styles', ['clean:css'], function() {
+    var plugins = [
+        autoprefixer({browsers: ['last 10 version']}),
+        cssnano({discardComments: {removeAll: true}})
+    ];
     return gulp.src(paths.styles)
         .pipe(sourcemaps.init())
-        .pipe(minifyCSS())
+        .pipe(postcss(plugins))
         .pipe(concat('all.min.css'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/build/css'));
@@ -54,6 +61,7 @@ gulp.task('styles', ['clean:css'], function() {
 
 gulp.task('images', ['clean:img'], function() {
     return gulp.src(paths.images)
+        .pipe(newer('public/build/img'))
         .pipe(imagemin({
             verbose: true,
             progressive: true,
