@@ -133,7 +133,7 @@ class AdminUsersController extends Controller
         }
 
         $user->delete();
-        Session::flash('deleted', 'Usuário "'.$user->name.'" deletado com sucesso');
+        Session::flash('deleted', 'Usuário "'.$user->name.'" foi deletado.');
         return redirect(route('admin.users.index'));
     }
 }

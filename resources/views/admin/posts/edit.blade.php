@@ -31,8 +31,9 @@
         </div>
         {!! Form::close() !!}
         {!! Form::open(['method'=>'DELETE', 'action'=>['AdminPostsController@destroy',$post->id]]) !!}
-        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger col-md-3 col-md-offset-1', 'type' => 'submit']) }}
+        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger col-md-3 col-md-offset-1 deletar', 'type' => 'submit']) }}
         {!! Form::close() !!}
+        @include("includes.delete-warning")
     </div>
     
 

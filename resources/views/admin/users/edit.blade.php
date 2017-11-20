@@ -48,34 +48,10 @@
         {!! Form::close() !!}
 
         {!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy',$user->id]]) !!}
-        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger col-md-3 col-md-offset-1', 'type' => 'submit']) }}
+        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger col-md-3 col-md-offset-1 deletar', 'type' => 'submit']) }}
         {!! Form::close() !!}
-        @section('delete_warning')
-            <script>
-                $('button[type="submit"]').on('click',function(e){
-                    e.preventDefault();
-                    var form = $(this).parents('form');
-                    swal({
-                        title: "Tem certeza que deseja deletar?",
-                        text: "",
-                        type: "warning",
-                        showCancelButton: true,
-                        showLoaderOnConfirm: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Sim, pode deletar",
-                        cancelButtonText: "Não, quero cancelar",
-                        preConfirm: function() {
-                            return new Promise(function(resolve, reject) {
-                                form.submit();
-                                setTimeout(function() {
-                                    resolve();
-                                }, 2000);
-                            });
-                        }
-                    })
-                });
-            </script>
-        @endsection
+        @include("includes.delete-warning")
+
     </div>
 
 

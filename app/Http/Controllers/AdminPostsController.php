@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminPostsController extends Controller
 {
@@ -55,6 +56,7 @@ class AdminPostsController extends Controller
         }
 
         Post::create($input);
+        Session::flash('created', 'Post criado.');
         return redirect(route('admin.posts.index'));
     }
 
@@ -104,6 +106,7 @@ class AdminPostsController extends Controller
          * Fazendo o UPDATE somente se for quem criou o post
          */
         Auth::user()->posts()->whereId($id)->first()->update($input);
+        Session::flash('updated', 'Post atualizado.');
         return redirect(route('admin.posts.index'));
     }
 
@@ -121,7 +124,7 @@ class AdminPostsController extends Controller
             $post->photo->delete();
         }
         $post->delete();
-        Session::flash('deleted_post', 'Post "'.$user->name.'" deletado com sucesso');
+        Session::flash('deleted', 'Post deletado.');
         return redirect(route('admin.posts.index'));
     }
 }
