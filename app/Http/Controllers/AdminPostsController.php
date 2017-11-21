@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\Http\Requests\PostsRequest;
 use App\Photo;
 use App\Post;
@@ -126,5 +127,11 @@ class AdminPostsController extends Controller
         $post->delete();
         Session::flash('deleted', 'Post deletado.');
         return redirect(route('admin.posts.index'));
+    }
+
+    public function post($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('post', compact('post'));
     }
 }
