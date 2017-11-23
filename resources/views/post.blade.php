@@ -31,9 +31,8 @@
     <p class="lead">{{$post->body}}</p>
 
     <hr>
-
     <!-- Blog Comments -->
-
+    @if(Auth::check())
     <!-- Comments Form -->
     <div class="well">
         <h4>Deixe um comentário:</h4>
@@ -42,7 +41,6 @@
         {!! Form::open(['method' => 'POST', 'action' => 'PostCommentsController@store', 'files' => true]) !!}
         {!! Form::hidden('post_id', $post->id); !!}
         <div class="form-group form-inline">
-            {!! Form::label('body','Comentário:') !!}
             {!! Form::textarea('body', null,['class'=>'form-control','rows' => '3','style'=>'width:100%', 'required']); !!}
         </div>
         <div class="form-group">
@@ -54,12 +52,12 @@
     </div>
     <hr>
     <!-- Posted Comments -->
-
+    @endif
     <!-- Comment -->
-    @foreach($post->comments as $comment)
+    @forelse($post->activeComments as $comment)
     <div class="media">
         <a class="pull-left" href="#">
-            <img class="media-object" src="{{$comment->photo}}" width="50">
+            <img class="media-object" src="{{$comment->photo}}" width="64">
         </a>
         <div class="media-body">
             <h4 class="media-heading">{{$comment->author}}
@@ -67,32 +65,63 @@
             </h4>
             {{$comment->body}}
         </div>
-    </div>
-    @endforeach
-    <!-- Comment -->
-    <div class="media">
-        <a class="pull-left" href="#">
-            <img class="media-object" src="http://placehold.it/64x64" alt="">
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">Start Bootstrap
-                <small>August 25, 2014 at 9:30 PM</small>
-            </h4>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            <!-- Nested Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Nested Start Bootstrap
-                        <small>August 25, 2014 at 9:30 PM</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        <!-- Nested Comment -->
+        <div class="media">
+        @if(Auth::check())
+            <!-- Comments Form -->
+                <div class="">
+                    @include('includes.errors')
+
+                    {!! Form::open(['method' => 'POST', 'action' => 'CommentRepliesController@createReply', 'files' => false]) !!}
+                    {!! Form::hidden('comment_id', $comment->id); !!}
+                    <div class="form-group form-inline">
+                        {!! Form::label('body','Responder:') !!}
+                        {!! Form::textarea('body', null,['class'=>'form-control','rows' => '2','style'=>'width:100%', 'required']); !!}
+                    </div>
+                    <div class="form-group">
+                        {{ Form::button('<i class="fa fa-save" aria-hidden="true"></i> Salvar', ['class' => 'btn btn-primary col-md-3', 'type' => 'submit', 'style'=>'margin:0']) }}
+                        <br>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-            </div>
-            <!-- End Nested Comment -->
+                <hr>
+                <!-- Posted Comments -->
+            @endif
+            @if(count($comment->activeReplies)>0)
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="padding: 0;">
+                            <a data-toggle="collapse" href="#collapse{{$comment->id}}">
+                                <h4 class="panel-title" style="padding: 10px;">
+                                    Ver respostas
+                                </h4>
+                            </a>
+                        </div>
+                        <div id="collapse{{$comment->id}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                @foreach($comment->activeReplies as $commentreply)
+                                    <div class="media">
+                                        <a class="pull-left" href="#">
+                                            <img class="media-object" src="{{$commentreply->photo}}" width="64">
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">{{$commentreply->author}}
+                                                <small>{{$commentreply->created_at->diffForHumans()}}</small>
+                                            </h4>
+                                            {{$commentreply->body}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
+        <!-- End Nested Comment -->
     </div>
+    @empty
+        <h4>Nenhum comentário</h4>
+    @endforelse
 
 @endsection

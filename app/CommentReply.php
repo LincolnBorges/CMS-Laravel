@@ -17,6 +17,11 @@ class CommentReply extends Model
 
     public function comment()
     {
-        return $this->belongsTo('App\Coment');
+        return $this->belongsTo('App\Comment');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 }

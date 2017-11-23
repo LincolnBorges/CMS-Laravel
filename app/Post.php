@@ -27,4 +27,9 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function activeComments()
+    {
+        return $this->hasMany('App\Comment')->active();
+    }
 }

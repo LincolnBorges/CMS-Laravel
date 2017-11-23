@@ -20,8 +20,18 @@ class Comment extends Model
         return $this->hasMany('App\CommentReply');
     }
 
+    public function activeReplies()
+    {
+        return $this->hasMany('App\CommentReply')->active();
+    }
+
     public function post()
     {
         return $this->belongsTo('App\Post');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 }

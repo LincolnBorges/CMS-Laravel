@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\CommentReply;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CommentRepliesController extends Controller
 {
@@ -37,6 +40,18 @@ class CommentRepliesController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function createReply(Request $request)
+    {
+        $user               = Auth::user();
+        $comment            = $request->all();
+        $comment['author']  = $user->name;
+        $comment['email']   = $user->email;
+        $comment['photo']   = $user->photo->file;
+        CommentReply::create($comment);
+        Session::flash('created', 'Comentário foi criado mas precisa de aprovação');
+        return redirect()->back();
     }
 
     /**
