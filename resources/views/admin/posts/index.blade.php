@@ -9,7 +9,7 @@
     <table class="table table-hover table-responsive">
         <thead>
         <tr>
-            <th>Imagem</th>
+            {{--<th>Imagem</th>--}}
             <th>Criador</th>
             <th>Categoria</th>
             <th>Título</th>
@@ -21,13 +21,13 @@
         @if($posts)
             @foreach ($posts as $post)
                 <tr>
-                    <td><img src="{{$post->photo ? $post->photo->file : '/images/user-profile-placeholder.png'}}" width="100" class="img-responsive img-rounded"></td>
+                    {{--<td><img src="{{$post->photo ? $post->photo->file : '/images/user-profile-placeholder.png'}}" width="100" class="img-responsive img-rounded"></td>--}}
                     <td>{{$post->user->name}}</td>
                     <td>{{$post->category ? $post->category->name : 'Sem categoria'}}</td>
-                    <td>{{$post->title}}</td>
+                    <td>{{str_limit($post->title,20)}}</td>
                     <td>{{str_limit($post->body,10)}}</td>
                     <td>
-                        <a href="{{route('home.post',$post->id)}}"  target="_blank" class="btn btn-warning">
+                        <a href="{{route('home.post',$post->slug)}}"  target="_blank" class="btn btn-warning">
                             <i class="fa fa-eye"></i> Visualizar
                         </a>
                         @if(count($post->comments) > 0)
@@ -50,4 +50,9 @@
         @endif
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {{$posts->render()}}
+        </div>
+    </div>
 @endsection

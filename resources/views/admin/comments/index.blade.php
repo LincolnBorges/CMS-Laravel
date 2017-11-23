@@ -20,7 +20,7 @@
         <tbody>
             @foreach ($comments as $comment)
                 <tr>
-                    <td><a href="{{route('home.post', $comment->post->id)}}" target="_blank">{{$comment->post->title}}</a></td>
+                    <td><a href="{{route('home.post', $comment->post->slug)}}" target="_blank">{{$comment->post->title}}</a></td>
                     <td>{{$comment->author}}</td>
                     <td>{{$comment->email}}</td>
                     <td>{{str_limit($comment->body,10)}}</td>
