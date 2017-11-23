@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Comentários</h1>
+    <h1>Respostas ao comentário</h1>
     <br><br>
 
     @include('includes.sweetalert2')
 
-    @if(count($comments)>0)
+    @if(count($replies)>0)
         <table class="table table-hover table-responsive">
             <thead>
             <tr>
-                <th>Post</th>
+                <th>Comentário</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Mensagem</th>
@@ -18,25 +18,23 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($comments as $comment)
+            @foreach ($replies as $reply)
                 <tr>
-                    <td><a href="{{route('home.post', $comment->post->id)}}" target="_blank">{{$comment->post->title}}</a></td>
-                    <td>{{$comment->author}}</td>
-                    <td>{{$comment->email}}</td>
-                    <td>{{str_limit($comment->body,10)}}</td>
+                    <td><a href="{{route('home.post', $reply->comment->post->id)}}" target="_blank">{{$reply->comment->post->title}}</a></td>
+                    <td>{{$reply->author}}</td>
+                    <td>{{$reply->email}}</td>
+                    <td>{{str_limit($reply->body,10)}}</td>
                     <td>
-                        @if(count($comment->replies) > 0)
-                            <a href="{{route('admin.comment.replies.show',$comment->id)}}" class="btn btn-info">
-                                <i class="fa fa-comments-o"></i> Respostas
-                            </a>
-                        @endif
-                        {!! Form::open(['method'=>'DELETE', 'action'=>['PostCommentsController@destroy',$comment->id],'style'=>'display: inline-block;']) !!}
+                        <a href="{{route('admin.users.edit',$reply->id)}}" class="btn btn-info">
+                            <i class="fa fa-edit"></i> Editar
+                        </a>
+                        {!! Form::open(['method'=>'DELETE', 'action'=>['CommentRepliesController@destroy',$reply->id],'style'=>'display: inline-block;']) !!}
                         {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger deletar', 'type' => 'submit']) }}
                         {!! Form::close() !!}
                         @include("includes.delete-warning")
 
-                        {!! Form::open(['method'=>'POST', 'action'=>['PostCommentsController@activate',$comment->id],'style'=>'display: inline-block;']) !!}
-                        @if(!$comment->is_active)
+                        {!! Form::open(['method'=>'POST', 'action'=>['CommentRepliesController@activate',$reply->id],'style'=>'display: inline-block;']) !!}
+                        @if(!$reply->is_active)
                             {{ Form::hidden('is_active', '1') }}
                             {{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Aprovar', ['class' => 'btn btn-warning', 'type' => 'submit']) }}
                         @else

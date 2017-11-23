@@ -103,9 +103,9 @@ class PostCommentsController extends Controller
     {
         Comment::findOrFail($id)->update($request->all());
         if ($request->is_active) {
-            Session::flash('updated', 'Post aprovado.');
+            Session::flash('updated', 'Comentário aprovado.');
         } else {
-            Session::flash('updated', 'Post desaprovado.');
+            Session::flash('updated', 'Comentário desaprovado.');
         }
         return redirect()->back();
     }

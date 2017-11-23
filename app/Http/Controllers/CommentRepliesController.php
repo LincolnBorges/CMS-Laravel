@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\CommentReply;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,8 @@ class CommentRepliesController extends Controller
      */
     public function show($id)
     {
-        //
+        $replies = Comment::findOrFail($id)->replies;
+        return view('admin.comments.replies.show', compact('replies'));
     }
 
     /**
@@ -89,6 +91,24 @@ class CommentRepliesController extends Controller
     }
 
     /**
+     * Ativa ou desativa.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id, Request $request)
+    {
+        CommentReply::findOrFail($id)->update($request->all());
+        if ($request->is_active) {
+            Session::flash('updated', 'Comentário aprovado.');
+        } else {
+            Session::flash('updated', 'Comentário desaprovado.');
+        }
+        return redirect()->back();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -96,6 +116,8 @@ class CommentRepliesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        CommentReply::findOrFail($id)->delete();
+        Session::flash('deleted', 'Comentário deletado.');
+        return redirect()->back();
     }
 }

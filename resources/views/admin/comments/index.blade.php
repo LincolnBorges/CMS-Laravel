@@ -25,9 +25,11 @@
                     <td>{{$comment->email}}</td>
                     <td>{{str_limit($comment->body,10)}}</td>
                     <td>
-                        <a href="{{route('admin.users.edit',$comment->id)}}" class="btn btn-info">
-                            <i class="fa fa-edit"></i> Editar
+                        @if(count($comment->replies) > 0)
+                        <a href="{{route('admin.comment.replies.show',$comment->id)}}" class="btn btn-info">
+                            <i class="fa fa-comments-o"></i> Respostas
                         </a>
+                        @endif
                         {!! Form::open(['method'=>'DELETE', 'action'=>['PostCommentsController@destroy',$comment->id],'style'=>'display: inline-block;']) !!}
                         {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger deletar', 'type' => 'submit']) }}
                         {!! Form::close() !!}

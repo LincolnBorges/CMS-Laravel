@@ -32,8 +32,8 @@ Route::group(['middleware'=>'admin'], function () {
     Route::resource('admin/media', 'AdminMediaController');
     Route::resource('admin/comments', 'PostCommentsController');
     Route::post('admin/comments/activate/{id}', 'PostCommentsController@activate');
+    Route::post('admin/replies/activate/{id}', 'CommentRepliesController@activate');
     Route::resource('admin/comment/replies', 'CommentRepliesController');
-
 });
 
 Route::group(['middleware'=>'auth'], function () {
