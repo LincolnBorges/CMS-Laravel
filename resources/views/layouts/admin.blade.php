@@ -60,7 +60,10 @@
                     <i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li>
+                        {!! Form::open(['method'=>'POST', 'action'=>['Auth\LoginController@logout'],'style'=>'display: inline-block;']) !!}
+                        {{ Form::button('<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout', ['class' => 'btn btn-link', 'type' => 'submit']) }}
+                        {!! Form::close() !!}
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->

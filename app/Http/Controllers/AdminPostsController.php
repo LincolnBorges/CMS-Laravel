@@ -23,7 +23,7 @@ class AdminPostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(3);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -34,7 +34,7 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        $category = Category::lists('name', 'id')->all();
+        $category = Category::pluck('name', 'id')->all();
         return view('admin.posts.create', compact('category'));
     }
 
@@ -82,7 +82,7 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        $category = Category::lists('name', 'id');
+        $category = Category::pluck('name', 'id');
         return view('admin.posts.edit', compact('post', 'category'));
     }
 
