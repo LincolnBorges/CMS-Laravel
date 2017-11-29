@@ -127,7 +127,7 @@ class AdminPostsController extends Controller
         }
         $post->delete();
         Session::flash('deleted', 'Post deletado.');
-        return redirect(route('admin.posts.index'));
+        return redirect()->back();
     }
 
     public function post($id)
