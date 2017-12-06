@@ -11,9 +11,10 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('auth.login');
+})->middleware('guest');
 
 Route::get('/home', 'HomeController@index');
 
@@ -39,5 +40,6 @@ Route::group(['middleware'=>'admin', 'as' => 'admin.'], function () {
 });
 
 Route::group(['middleware'=>'auth', 'as' => 'admin.'], function () {
+    Route::redirect('/', '/admin');
     Route::post('comment/reply', 'CommentRepliesController@createReply');
 });

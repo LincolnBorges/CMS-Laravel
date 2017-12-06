@@ -5,7 +5,7 @@
     <br><br>
 
     @include('includes.errors')
-
+    @include('includes.tinyeditor')
     {!! Form::open(['method' => 'POST', 'action' => 'AdminPostsController@store', 'files' => true]) !!}
     <div class="form-group">
         {!! Form::label('title','Título:') !!}
@@ -13,7 +13,7 @@
     </div>
     <div class="form-group form-inline">
         {!! Form::label('body','Conteúdo:') !!}
-        {!! Form::textarea('body', null,['class'=>'form-control','rows' => '5','style'=>'width:100%']); !!}
+        {!! Form::textarea('body', null,['class'=>'form-control','rows' => '5','style'=>'width:100%', 'id'=>'html_editor']); !!}
     </div>
     <div class="form-group">
         {!! Form::label('category_id','Categoria:') !!}

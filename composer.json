@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.5.*",
         "laravelcollective/html": "5.5.*",
-        "cviebrock/eloquent-sluggable": "^4.3"
+        "cviebrock/eloquent-sluggable": "^4.3",
+        "intervention/image": "^2.4",
+        "unisharp/laravel-filemanager": "~1.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -20,14 +20,11 @@
             <tbody>
             @foreach ($replies as $reply)
                 <tr>
-                    <td><a href="{{route('home.post', $reply->comment->post->show)}}" target="_blank">{{$reply->comment->post->title}}</a></td>
+                    <td><a href="{{route('home.post', $reply->comment->post->slug)}}" target="_blank">{{$reply->comment->post->title}}</a></td>
                     <td>{{$reply->author}}</td>
                     <td>{{$reply->email}}</td>
                     <td>{{str_limit($reply->body,10)}}</td>
                     <td>
-                        <a href="{{route('admin.users.edit',$reply->id)}}" class="btn btn-info">
-                            <i class="fa fa-edit"></i> Editar
-                        </a>
                         {!! Form::open(['method'=>'DELETE', 'action'=>['CommentRepliesController@destroy',$reply->id],'style'=>'display: inline-block;']) !!}
                         {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Deletar', ['class' => 'btn btn-danger deletar', 'type' => 'submit']) }}
                         {!! Form::close() !!}

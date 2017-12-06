@@ -28,7 +28,7 @@
     <hr>
 
     <!-- Post Content -->
-    <p class="lead">{{$post->body}}</p>
+    {!!$post->body!!}
 
     <hr>
     <!-- Blog Comments -->
